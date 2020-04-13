@@ -10,6 +10,10 @@ public class CameraFrame extends AppCompatActivity {
     private HiddenCameraFragment mHiddenCameraFragment;
 
 
+    /**
+     * @param savedInstanceState saving status information
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +29,9 @@ public class CameraFrame extends AppCompatActivity {
     }
 
 
+    /**
+     * When user press back this method kill the activity.
+     */
     public void onBackPressed() {
         if (mHiddenCameraFragment != null) {    //Remove fragment from container if present
             getSupportFragmentManager()

@@ -34,15 +34,14 @@ import java.util.concurrent.ExecutionException;
 
 
 public class CameraOpen extends HiddenCameraFragment implements ResponseListener{
-    private static final int REQ_CODE_CAMERA_PERMISSION = 1253;
-   Timer timer = new Timer();
-   public boolean check=false;
-
+    private static final int REQ_CODE = 1253;
 
     private ImageView mImageView;
     TextView testView;
 
     private CameraConfig mCameraConfig;
+
+    Timer timer = new Timer();// This is using for take picture with timer
 
     @Nullable
     @Override
@@ -60,21 +59,20 @@ public class CameraOpen extends HiddenCameraFragment implements ResponseListener
                 .setImageRotation(CameraRotation.ROTATION_270)
                 .build();
 
-        //Check for the camera permission for the runtime
+        //Checking camera permission for the runtime
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED) {
 
-            //Start camera preview
+            //Starts camera preview
             startCamera(mCameraConfig);
         } else {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA},
-                    REQ_CODE_CAMERA_PERMISSION);
+                    REQ_CODE);
         }
 
         mImageView = view.findViewById(R.id.cam_prev);
         testView = view.findViewById(R.id.testView);
 
-        //Take a picture
         view.findViewById(R.id.capture_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,11 +82,13 @@ public class CameraOpen extends HiddenCameraFragment implements ResponseListener
                         public void run() {
                             //Take picture using the camera without preview.
                             takePicture();
+                            //
+                            //Post the photos taken to the server
                             new UploadFileToServer("http://biometrix.pythonanywhere.com/postImage", mCameraConfig.newPath,CameraOpen.this).execute();
                         }
                     };
 
-                   // Timer timer = new Timer();
+                   // Setting timer for programmaticaly taking photo.
                     timer.schedule(task, 0, 5000);
 
             }
@@ -100,15 +100,17 @@ public class CameraOpen extends HiddenCameraFragment implements ResponseListener
     }
 
 
-
-
-
+    /**
+     * @param requestCode for camera permission
+     * @param permissions gets permission answer
+     * @param grantResults if permission guarantee
+     */
     @SuppressLint("MissingPermission")
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        if (requestCode == REQ_CODE_CAMERA_PERMISSION) {
+        if (requestCode == REQ_CODE) {
 
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startCamera(mCameraConfig);
@@ -120,11 +122,15 @@ public class CameraOpen extends HiddenCameraFragment implements ResponseListener
         }
     }
 
+    /**
+     * @param imageFile it gets picture which is taking from camera
+     */
     @Override
     public void onImageCapture(@NonNull File imageFile) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.RGB_565;
         Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
+        //Printing filepath to the screen
         //Toast.makeText(getContext(),imageFile.getAbsolutePath(),Toast.LENGTH_SHORT).show();
 
         //Display the image to the image view
@@ -136,21 +142,18 @@ public class CameraOpen extends HiddenCameraFragment implements ResponseListener
     public void onCameraError(@CameraError.CameraErrorCodes int errorCode) {
         switch (errorCode) {
             case CameraError.ERROR_CAMERA_OPEN_FAILED:
-                //Camera open failed. Probably because another application
-                //is using the camera
+                //Camera open failed.
                 Toast.makeText(getContext(), "error_cannot_open", Toast.LENGTH_LONG).show();
                 break;
             case CameraError.ERROR_IMAGE_WRITE_FAILED:
-                //Image write failed. Please check if you have provided WRITE_EXTERNAL_STORAGE permission
+                //Image write failed.check provided WRITE_EXTERNAL_STORAGE permission
                 Toast.makeText(getContext(),"error_cannot_write", Toast.LENGTH_LONG).show();
                 break;
             case CameraError.ERROR_CAMERA_PERMISSION_NOT_AVAILABLE:
-                //camera permission is not available
-                //Ask for the camera permission before initializing it.
+                //camera permission is not available ,ask for the camera permission before initializing it.
                 Toast.makeText(getContext(), "error_cannot_get_permission", Toast.LENGTH_LONG).show();
                 break;
             case CameraError.ERROR_DOES_NOT_HAVE_OVERDRAW_PERMISSION:
-                //Display information dialog to the user with steps to grant "Draw over other app"
                 //permission for the app.
                 HiddenCameraUtils.openDrawOverPermissionSetting(getContext());
                 break;
@@ -160,12 +163,18 @@ public class CameraOpen extends HiddenCameraFragment implements ResponseListener
         }
     }
 
+
+   //When fragment destroy this function working.
    @Override
     public void onDestroy() {
         super.onDestroy();
+        //It stops the timer
         timer.cancel();
     }
 
+    /**
+     * @param text it is the response which returned from server
+     */
     @Override
     public void onResponseChanged(final String text) {
         getActivity().runOnUiThread(new Runnable() {

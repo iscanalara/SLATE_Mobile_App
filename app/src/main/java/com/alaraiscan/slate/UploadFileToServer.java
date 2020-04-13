@@ -44,6 +44,10 @@ public class UploadFileToServer extends AsyncTask<File, Void, String> {
             this.responseListener = responseListener;
         }
 
+    /**
+     * @param params
+     * @return
+     */
         @Override
         protected String doInBackground(File... params) {
             Log.d(TAG, "doInBackground");
@@ -87,9 +91,6 @@ public class UploadFileToServer extends AsyncTask<File, Void, String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            //Chat chat = new Chat;
-            //chat.Display(response);
 
             File file = new File(filePath);
             delete = file.delete();

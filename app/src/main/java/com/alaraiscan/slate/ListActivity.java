@@ -38,9 +38,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         });
 
 
-        //Chat chat= new Chat();
-        //chat.Display(selected);
-
         text = findViewById(R.id.getText);
         addToList = findViewById(R.id.addToList);
 

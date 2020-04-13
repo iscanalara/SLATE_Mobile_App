@@ -45,6 +45,8 @@
         android:layout_height="wrap_content"
         android:text="Cihazım Bulunamadı!"
         android:layout_below="@+id/pull_to_refresh"
+        android:background="@drawable/custom_button"
+        android:textColor="#FFFFFF"
         android:layout_alignParentStart="true" />
 
 </RelativeLayout>

@@ -37,6 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/scan_state"
         android:layout_alignParentBottom="true"
+        android:background="@drawable/custom_button"
+        android:textColor="#FFFFFF"
         android:text="Tekrar Tara" />
 
 
