@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Select">
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Cihaz Seçin."
+        android:paddingLeft="10dip"
+        android:textSize="30sp"/>
+
+    <TextView
+        android:id="@+id/info"
+        android:textSize="15sp"
+        android:paddingLeft="10dip"
+        android:paddingBottom="5dip"
+        android:textColor="#000000"
+        android:text="Ekranı çekerek yenileyin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text"/>
+
+    <me.aflak.pulltorefresh.PullToRefresh
+        android:id="@+id/pull_to_refresh"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/info">
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+        </ListView>
+
+    </me.aflak.pulltorefresh.PullToRefresh>
+
+    <Button
+        android:id="@+id/not_in_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cihazım Bulunamadı!"
+        android:layout_below="@+id/pull_to_refresh"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>

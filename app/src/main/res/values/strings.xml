@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">SLATE</string>
+    <string name="basla">Başla</string>
+    <string name="hizlicumleler">Hızlı Cümleler</string>
+    <string name="bOn">Bluetooth Aç</string>
+    <string name="todo">TODO</string>
+    <string name="btOn">Bluetooth Aç</string>
+    <string name="btOf">Bluetooth Kapa</string>
+    <string name="btOff">Bluetooth Kapa</string>
+    <string name="btList">Bluetooth Liste</string>
+    <string name="btbluetoothList">Göster</string>
+    <string name="btChat">Bluetooth Chat</string>
+    <string name="btSend">Gönder</string>
+    <string name="messageText">Text</string>
+    <string name="btListen">Dinle</string>
+    <string name="btdevList">Cihazlar</string>
+    <string name="messages">Messages</string>
+    <string name="mesaj">Mesaj</string>
+    <string name="button">Button</string>
+    <string name="btnListen">Button</string>
+    <string name="Listen">Dinle</string>
+    <string name="btnDevList">Listele</string>
+    <string name="msgView">TextView</string>
+    <string name="btnSend">Gönder</string>
+    <string name="writeMsg">Mesaj</string>
+
+
+</resources>
