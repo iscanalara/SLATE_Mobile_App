@@ -101,7 +101,7 @@ public class MainMenu extends AppCompatActivity {
     }
 
     public void  openBluetoothChat(){
-        Intent intent = new Intent(MainMenu.this,Chat.class);
+        Intent intent = new Intent(MainMenu.this,BluetoothChat.class);
         startActivity(intent);
     }
 

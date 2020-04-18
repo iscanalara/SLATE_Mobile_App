@@ -19,7 +19,7 @@ import java.util.UUID;
 import java.util.Vector;
 import java.util.logging.Handler;
 
-class BluetoothService extends Service {
+public class BluetoothService extends Service {
 
     private BluetoothAdapter mBluetoothAdapter;
     public static final String B_DEVICE = "MY DEVICE";
@@ -40,7 +40,12 @@ class BluetoothService extends Service {
     public static BluetoothDevice sDevice = null;
     public Vector<Byte> packData = new Vector<>(2048);
 
-//IBinder mIBinder = new LocalBinder();
+    public BluetoothService(BluetoothAdapter mBluetoothAdapter) {
+        this.mBluetoothAdapter = mBluetoothAdapter;
+    }
+    public BluetoothService() {
+        super();
+    }
 
 
     @Nullable

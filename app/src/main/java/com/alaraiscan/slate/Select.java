@@ -54,13 +54,14 @@ public class Select extends Activity implements PullToRefresh.OnRefreshListener 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(Select.this, MainMenu.class);
-                i.putExtra("pos", position);
+                Intent serviceIntent = new Intent(Select.this, BluetoothService.class);
+                String adress = bt.getPairedDevices().get(position).getAddress();
+                serviceIntent.putExtra("bluetooth_device", adress);
                 if(registered) {
                     unregisterReceiver(mReceiver);
                     registered=false;
                 }
-                startActivity(i);
+                startService(serviceIntent);
                 finish();
             }
         });
