@@ -6,10 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 
 public class MainActivity extends AppCompatActivity {
-    Button starterButton;
+    ImageView starterButton;
+
+    // starting bluetooth service with button.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    //After start the Bluetooth service it calls scan class for find a bluetooth adapter.
 
     public void  bluetoothConnection(){
         Intent intent = new Intent(MainActivity.this,Scan.class);

@@ -18,9 +18,12 @@ import java.util.List;
 
 import me.aflak.bluetooth.Bluetooth;
 
+/**
+ * The type Scan.
+ */
 public class Scan extends Activity implements Bluetooth.DiscoveryCallback, AdapterView.OnItemClickListener {
 
-    private Bluetooth bluetooth;
+    private Bluetooth bt;
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private TextView state;
@@ -32,19 +35,19 @@ public class Scan extends Activity implements Bluetooth.DiscoveryCallback, Adapt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan);
-        listView = (ListView)findViewById(R.id.scan_list);
-        state = (TextView) findViewById(R.id.scan_state);
-        progress = (ProgressBar) findViewById(R.id.scan_progress);
-        scan = (Button) findViewById(R.id.scan_scan_again);
+        listView = findViewById(R.id.scan_list);
+        state =  findViewById(R.id.scan_state);
+        progress = findViewById(R.id.scan_progress);
+        scan = findViewById(R.id.scan_scan_again);
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
 
-        bluetooth = new Bluetooth(this);
-        bluetooth.setDiscoveryCallback(this);
+        bt = new Bluetooth(this);
+        bt.setDiscoveryCallback(this);
 
-        bluetooth.scanDevices();
+        bt.scanDevices();
         progress.setVisibility(View.VISIBLE);
         state.setText("Aranıyor...");
         listView.setEnabled(false);
@@ -66,7 +69,7 @@ public class Scan extends Activity implements Bluetooth.DiscoveryCallback, Adapt
                 devices = new ArrayList<>();
                 progress.setVisibility(View.VISIBLE);
                 state.setText("Aranıyor...");
-                bluetooth.scanDevices();
+                bt.scanDevices();
             }
         });
     }
@@ -95,7 +98,7 @@ public class Scan extends Activity implements Bluetooth.DiscoveryCallback, Adapt
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         setProgressVisibility(View.VISIBLE);
         setText("Eşleşiyor...");
-        bluetooth.pair(devices.get(position));
+        bt.pair(devices.get(position));
     }
 
     @Override

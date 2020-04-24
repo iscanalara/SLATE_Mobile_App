@@ -37,53 +37,57 @@ public class UploadFileToServer extends AsyncTask<File, Void, String> {
         private ResponseListener responseListener;
 
 
+   public UploadFileToServer(final String server, String filePath) {
+        this.server = server;
+        this.filePath = filePath;
+    }
 
-    public UploadFileToServer(final String server, String filePath, ResponseListener responseListener) {
+
+
+   /* public UploadFileToServer(final String server, String filePath, ResponseListener responseListener) {
             this.server = server;
             this.filePath = filePath;
             this.responseListener = responseListener;
-        }
+        }*/
 
     /**
-     * @param params
-     * @return
+     * @param params : Its getting file parameters.
+     * @return response : It returns a response which is coming from server.
      */
         @Override
         protected String doInBackground(File... params) {
             Log.d(TAG, "doInBackground");
-            HttpClient http = new DefaultHttpClient();//AndroidHttpClient.newInstance("MyApp"); 1 sn run
+            HttpClient http = new DefaultHttpClient();
             HttpPost method = new HttpPost(this.server);
 
-            //method.setEntity(new FileEntity(, "/storage/emulated/0/Android/data/com.alaraiscan.slate/cache/img4.jpeg"));
-            //File f = new File("/storage/emulated/0/Android/data/com.alaraiscan.slate/cache/img4.jpeg");
+
             File f = new File(filePath);
             FileBody fb = new FileBody(f);
             MultipartEntity entity = new MultipartEntity();
             entity.addPart("img", fb);
-            //FileEntity fe = new FileEntity(f,"pic");
             method.setEntity(entity); //run
             try {
                 HttpResponse response = http.execute(method);
-                BufferedReader rd = new BufferedReader(new InputStreamReader(
+                BufferedReader br = new BufferedReader(new InputStreamReader(
                         response.getEntity().getContent()));
                 final StringBuilder out = new StringBuilder();
 
                 String line;
                 try {
-                    while ((line = rd.readLine()) != null) {
+                    while ((line = br.readLine()) != null) {
                         out.append(line);
                     }
                 } catch (Exception e) {}
                 // wr.close();
                 try {
-                    rd.close();
+                    br.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                // final String serverResponse = slurp(is); bunu bas
+
                 Log.d(TAG, "serverResponse: " + out.toString());
                 this.response = out.toString();
-                responseListener.onResponseChanged(out.toString());
+                //responseListener.onResponseChanged(out.toString());
 
 
             } catch (ClientProtocolException e) {
@@ -92,8 +96,10 @@ public class UploadFileToServer extends AsyncTask<File, Void, String> {
                 e.printStackTrace();
             }
 
+            //delete file if it is post to server
             File file = new File(filePath);
             delete = file.delete();
+
             return response;
         }
 

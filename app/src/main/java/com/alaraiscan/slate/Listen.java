@@ -37,9 +37,7 @@ public class Listen extends AppCompatActivity {
         });
     }
 
-    /**
-     *
-     */
+ // It uses Google app for listen and convert to the text.
     private void speak(){
 
         try{
@@ -62,7 +60,7 @@ public class Listen extends AppCompatActivity {
     }
 
 
-
+//When listen is done it set the text to the screen.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

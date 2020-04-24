@@ -19,30 +19,72 @@ import java.util.UUID;
 import java.util.Vector;
 import java.util.logging.Handler;
 
+/**
+ * The type Bluetooth service.
+ */
 public class BluetoothService extends Service {
 
     private BluetoothAdapter mBluetoothAdapter;
+    /**
+     * The constant B_DEVICE.
+     */
     public static final String B_DEVICE = "MY DEVICE";
+    /**
+     * The constant B_UUID.
+     */
     public static final String B_UUID = "00001101-0000-1000-8000-00805f9b34fb";
 // 00000000-0000-1000-8000-00805f9b34fb
 
+    /**
+     * The constant STATE_NONE.
+     */
     public static final int STATE_NONE = 0;
+    /**
+     * The constant STATE_LISTEN.
+     */
     public static final int STATE_LISTEN = 1;
+    /**
+     * The constant STATE_CONNECTING.
+     */
     public static final int STATE_CONNECTING = 2;
+    /**
+     * The constant STATE_CONNECTED.
+     */
     public static final int STATE_CONNECTED = 3;
 
     private ConnectBtThread mConnectThread;
     private static ConnectedBtThread mConnectedThread;
 
     private static Handler mHandler = null;
+    /**
+     * The constant mState.
+     */
     public static int mState = STATE_NONE;
+    /**
+     * The constant deviceName.
+     */
     public static String deviceName;
+    /**
+     * The constant sDevice.
+     */
     public static BluetoothDevice sDevice = null;
+    /**
+     * The Pack data.
+     */
     public Vector<Byte> packData = new Vector<>(2048);
 
+    /**
+     * Instantiates a new Bluetooth service.
+     *
+     * @param mBluetoothAdapter the m bluetooth adapter
+     */
     public BluetoothService(BluetoothAdapter mBluetoothAdapter) {
         this.mBluetoothAdapter = mBluetoothAdapter;
     }
+
+    /**
+     * Instantiates a new Bluetooth service.
+     */
     public BluetoothService() {
         super();
     }
@@ -54,12 +96,26 @@ public class BluetoothService extends Service {
         //mHandler = getApplication().getHandler();
         return mBinder;
     }
+
+    /**
+     * Toast.
+     *
+     * @param mess the mess
+     */
     public void toast(String mess){
         Toast.makeText(this,mess,Toast.LENGTH_SHORT).show();
     }
     private final IBinder mBinder = (IBinder) new LocalBinder();
 
+    /**
+     * The type Local binder.
+     */
     public class LocalBinder extends Binder {
+        /**
+         * Gets service.
+         *
+         * @return the service
+         */
         BluetoothService getService() {
             // Return this instance of LocalService so clients can call public methods
             return BluetoothService.this;
@@ -90,7 +146,7 @@ public class BluetoothService extends Service {
             mConnectedThread = null;
         }
         mConnectThread = new ConnectBtThread(device);
-        toast("connecting");
+        toast("Bağlanıyor...");
         mConnectThread.start();
         setState(STATE_CONNECTING);
     }
@@ -100,6 +156,10 @@ public class BluetoothService extends Service {
             // mHandler.obtainMessage();
         }
     }
+
+    /**
+     * Stop.
+     */
     public synchronized void stop(){
         setState(STATE_NONE);
         if (mConnectThread != null){
@@ -117,12 +177,17 @@ public class BluetoothService extends Service {
         stopSelf();
     }
 
+    /**
+     * Send data.
+     *
+     * @param message the message
+     */
     public void sendData(String message){
         if (mConnectedThread!= null){
             mConnectedThread.write(message.getBytes());
-            toast("sent data");
+            toast("Mesaj iletildi");
         }else {
-            Toast.makeText(BluetoothService.this,"Failed to send data",Toast.LENGTH_SHORT).show();
+            Toast.makeText(BluetoothService.this,"Mesaj iletilirken bir hata oluştu",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -166,6 +231,11 @@ private synchronized void connected(BluetoothSocket mmSocket){
         private final BluetoothSocket mSocket;
         private final BluetoothDevice mDevice;
 
+        /**
+         * Instantiates a new Connect bt thread.
+         *
+         * @param device the device
+         */
         public ConnectBtThread(BluetoothDevice device){
             mDevice = device;
             BluetoothSocket socket = null;
@@ -203,6 +273,9 @@ private synchronized void connected(BluetoothSocket mmSocket){
             mConnectedThread.start();
         }
 
+        /**
+         * Cancel.
+         */
         public void cancel(){
 
             try {
@@ -221,6 +294,11 @@ private synchronized void connected(BluetoothSocket mmSocket){
 
         private byte[] buffer;
 
+        /**
+         * Instantiates a new Connected bt thread.
+         *
+         * @param socket the socket
+         */
         public ConnectedBtThread(BluetoothSocket socket){
             cSocket = socket;
             InputStream tmpIn = null;
@@ -260,6 +338,11 @@ private synchronized void connected(BluetoothSocket mmSocket){
         }
 
 
+        /**
+         * Write.
+         *
+         * @param buff the buff
+         */
         public void write(byte[] buff){
             try {
                 outS.write(buff);

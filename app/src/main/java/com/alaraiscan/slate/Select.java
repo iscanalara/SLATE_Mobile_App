@@ -22,13 +22,16 @@ import java.util.List;
 import me.aflak.bluetooth.Bluetooth;
 import me.aflak.pulltorefresh.PullToRefresh;
 
+/**
+ * The type Select.
+ */
 public class Select extends Activity implements PullToRefresh.OnRefreshListener {
 
     private Bluetooth bt;
     private ListView listView;
-    private Button not_found;
+    private Button notFound;
     private List<BluetoothDevice> paired;
-    private PullToRefresh pull_to_refresh;
+    private PullToRefresh refresh;
     private boolean registered=false;
 
     @Override
@@ -43,13 +46,13 @@ public class Select extends Activity implements PullToRefresh.OnRefreshListener 
         bt = new Bluetooth(this);
         bt.enableBluetooth();
 
-        pull_to_refresh = (PullToRefresh)findViewById(R.id.pull_to_refresh);
-        listView =  (ListView)findViewById(R.id.list);
-        not_found =  (Button) findViewById(R.id.not_in_list);
+        refresh = findViewById(R.id.pull_to_refresh);
+        listView =  findViewById(R.id.list);
+        notFound = findViewById(R.id.not_in_list);
 
-        pull_to_refresh.setListView(listView);
-        pull_to_refresh.setOnRefreshListener(this);
-        pull_to_refresh.setSlide(500);
+        refresh.setListView(listView);
+        refresh.setOnRefreshListener(this);
+        refresh.setSlide(500);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -66,18 +69,18 @@ public class Select extends Activity implements PullToRefresh.OnRefreshListener 
             }
         });
 
-        not_found.setOnClickListener(new View.OnClickListener() {
+        notFound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Select.this, Scan.class);
-                startActivity(i);
+                Intent intent = new Intent(Select.this, Scan.class);
+                startActivity(intent);
             }
         });
 
-        addDevicesToList();
+        addBtDevicesToList();
     }
 
-    private void addDevicesToList() {
+    private void addBtDevicesToList() {
         paired = bt.getPairedDevices();
 
         List<String> names = new ArrayList<>();
@@ -91,7 +94,7 @@ public class Select extends Activity implements PullToRefresh.OnRefreshListener 
 
         listView.setAdapter(adapter);
 
-        not_found.setEnabled(true);
+        notFound.setEnabled(true);
     }
 
     @Override
@@ -112,17 +115,10 @@ public class Select extends Activity implements PullToRefresh.OnRefreshListener 
                 paired = bt.getPairedDevices();
             }
         });
-        pull_to_refresh.refreshComplete();
+        refresh.refreshComplete();
 
     }
 
-    public void onDestroy() {
-        super.onDestroy();
-        if(registered) {
-            unregisterReceiver(mReceiver);
-            registered=false;
-        }
-    }
 
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
@@ -147,7 +143,7 @@ public class Select extends Activity implements PullToRefresh.OnRefreshListener 
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                addDevicesToList();
+                                addBtDevicesToList();
                                 listView.setEnabled(true);
                             }
                         });
@@ -156,5 +152,14 @@ public class Select extends Activity implements PullToRefresh.OnRefreshListener 
             }
         }
     };
+
+
+    public void onDestroy() {
+        super.onDestroy();
+        if(registered) {
+            unregisterReceiver(mReceiver);
+            registered=false;
+        }
+    }
 
 }

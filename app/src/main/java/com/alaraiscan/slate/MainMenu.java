@@ -31,7 +31,7 @@ public class MainMenu extends AppCompatActivity {
     ImageView bgapp;
 
 
-
+// creating all activity here.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +91,8 @@ public class MainMenu extends AppCompatActivity {
     }
 
     public void  openCam(){
-        Intent intent = new Intent(MainMenu.this,CameraFrame.class);
+       // Intent intent = new Intent(MainMenu.this,CameraFrame.class);
+        Intent intent = new Intent(MainMenu.this,CameraM.class);
         startActivity(intent);
     }
 

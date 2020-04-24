@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
+import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -33,6 +34,9 @@ import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
 
 
+/**
+ * The type Camera open.
+ */
 public class CameraOpen extends HiddenCameraFragment implements ResponseListener{
     private static final int REQ_CODE = 1253;
 
@@ -41,7 +45,9 @@ public class CameraOpen extends HiddenCameraFragment implements ResponseListener
 
     private CameraConfig mCameraConfig;
 
-    Timer timer = new Timer();// This is using for take picture with timer
+
+    // This is using for take picture with timer
+    Timer timer = new Timer();
 
     @Nullable
     @Override
@@ -84,7 +90,8 @@ public class CameraOpen extends HiddenCameraFragment implements ResponseListener
                             takePicture();
                             //
                             //Post the photos taken to the server
-                            new UploadFileToServer("http://biometrix.pythonanywhere.com/postImage", mCameraConfig.newPath,CameraOpen.this).execute();
+                            //new UploadFileToServer("http://biometrix.pythonanywhere.com/postImage", mCameraConfig.newPath).execute();
+                            //new UploadFileToServer("http://biometrix.pythonanywhere.com/postImage", mCameraConfig.newPath,CameraOpen.this).execute();
                         }
                     };
 

@@ -13,14 +13,35 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/**
+ * The type List activity.
+ */
 public class ListActivity extends AppCompatActivity implements View.OnClickListener{
 
+    /**
+     * The Array list.
+     */
     ArrayList<String> arrayList;
+    /**
+     * The Array adapter.
+     */
     ArrayAdapter<String> arrayAdapter;
+    /**
+     * The Selected.
+     */
     String selected;
 
+    /**
+     * The List view.
+     */
     ListView listView;
+    /**
+     * The Text.
+     */
     EditText text;
+    /**
+     * The Add to list.
+     */
     Button addToList;
 
     @Override
