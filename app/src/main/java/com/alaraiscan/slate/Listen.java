@@ -15,10 +15,15 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Locale;
 
+/**
+ * The type Listen.
+ */
 public class Listen extends AppCompatActivity {
 
     private final int REQ_CODE = 100;
+
     TextView textView;
+
     ImageView speak;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

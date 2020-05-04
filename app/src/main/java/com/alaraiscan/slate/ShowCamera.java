@@ -1,17 +1,22 @@
 package com.alaraiscan.slate;
 
-import android.content.Context;
-import android.content.res.Configuration;
-import android.hardware.Camera;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
+        import android.content.Context;
+        import android.content.res.Configuration;
+        import android.graphics.Canvas;
+        import android.graphics.Color;
+        import android.graphics.Paint;
+        import android.hardware.Camera;
+        import android.util.Log;
+        import android.view.SurfaceHolder;
+        import android.view.SurfaceView;
 
-import java.io.IOException;
-import java.util.List;
+        import java.io.IOException;
+        import java.util.List;
 
 public class ShowCamera  extends SurfaceView implements SurfaceHolder.Callback {
     Camera camera;
     SurfaceHolder holder;
+
 
 
     public ShowCamera(Context context, Camera camera) {
@@ -57,15 +62,21 @@ public class ShowCamera  extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
-    @Override
-    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
 
-    }
 
+
+    //stopping preview
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         camera.stopPreview();
         camera.release();
 
     }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+
+    }
+
+
 }

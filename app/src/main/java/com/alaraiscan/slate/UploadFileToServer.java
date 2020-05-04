@@ -1,25 +1,18 @@
 package com.alaraiscan.slate;
 
-import android.app.Activity;
-import android.content.Context;
-import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.androidhiddencamera.CameraConfig;
 
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -34,21 +27,30 @@ public class UploadFileToServer extends AsyncTask<File, Void, String> {
         private String filePath;
         public String response;
         public boolean delete;
+        public boolean run = true;
+
         private ResponseListener responseListener;
+        BluetoothService mServer;
+        String x1,y1,x2,y2,label;
 
 
-   public UploadFileToServer(final String server, String filePath) {
+
+
+
+
+   /*public UploadFileToServer(final String server, String filePath) {
         this.server = server;
         this.filePath = filePath;
-    }
+    }*/
 
 
 
-   /* public UploadFileToServer(final String server, String filePath, ResponseListener responseListener) {
+   public UploadFileToServer(final String server, String filePath, ResponseListener responseListener) {
             this.server = server;
             this.filePath = filePath;
             this.responseListener = responseListener;
-        }*/
+        }
+
 
     /**
      * @param params : Its getting file parameters.
@@ -59,8 +61,6 @@ public class UploadFileToServer extends AsyncTask<File, Void, String> {
             Log.d(TAG, "doInBackground");
             HttpClient http = new DefaultHttpClient();
             HttpPost method = new HttpPost(this.server);
-
-
             File f = new File(filePath);
             FileBody fb = new FileBody(f);
             MultipartEntity entity = new MultipartEntity();
@@ -85,14 +85,19 @@ public class UploadFileToServer extends AsyncTask<File, Void, String> {
                     e.printStackTrace();
                 }
 
-                Log.d(TAG, "serverResponse: " + out.toString());
-                this.response = out.toString();
-                //responseListener.onResponseChanged(out.toString());
+                JSONObject topLevel = new JSONObject(out.toString());
+                JSONObject main = topLevel.getJSONObject("interpretation");
+                label = String.valueOf(main.getString("label"));
 
+                Log.d(TAG, "serverResponse: " + label.toString());
+                this.response = label.toString();
+                responseListener.onResponseChanged(main);
 
             } catch (ClientProtocolException e) {
                 e.printStackTrace();
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
@@ -100,11 +105,11 @@ public class UploadFileToServer extends AsyncTask<File, Void, String> {
             File file = new File(filePath);
             delete = file.delete();
 
-            return response;
+            return response ;
         }
 
-
-
-
-
+    @Override
+    protected void onCancelled() {
+        super.onCancelled();
+    }
 }

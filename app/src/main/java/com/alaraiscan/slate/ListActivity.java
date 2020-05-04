@@ -18,30 +18,18 @@ import java.util.ArrayList;
  */
 public class ListActivity extends AppCompatActivity implements View.OnClickListener{
 
-    /**
-     * The Array list.
-     */
+
     ArrayList<String> arrayList;
-    /**
-     * The Array adapter.
-     */
+
     ArrayAdapter<String> arrayAdapter;
-    /**
-     * The Selected.
-     */
+
     String selected;
 
-    /**
-     * The List view.
-     */
+
     ListView listView;
-    /**
-     * The Text.
-     */
+
     EditText text;
-    /**
-     * The Add to list.
-     */
+
     Button addToList;
 
     @Override
@@ -52,6 +40,7 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //get selected item
                 selected = String.valueOf(parent.getItemAtPosition(position));
                 Toast.makeText( ListActivity.this,selected,Toast.LENGTH_LONG).show();
 
@@ -74,7 +63,6 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         String res = text.getText().toString();
         ((ListArrayApplication)this.getApplication()).setArrayWithString(res);
-        //arrayList.add(res);
         Toast.makeText(getApplicationContext(),res,Toast.LENGTH_LONG).show();
         arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,arrayList);
         listView.setAdapter(arrayAdapter);

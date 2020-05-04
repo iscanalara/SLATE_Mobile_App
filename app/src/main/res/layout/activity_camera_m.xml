@@ -6,41 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".CameraM">
 
-    <TextView
-        android:id="@+id/testView"
-        android:layout_width="172dp"
-        android:layout_height="58dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="231dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="68dp"
-        android:text="TextView" />
+
+
+
 
     <Button
         android:id="@+id/button"
-        android:layout_width="match_parent"
+        android:layout_width="204dp"
         android:layout_height="61dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="205dp"
         android:layout_marginBottom="0dp"
         android:background="@drawable/custom_button"
         android:onClick="takePicture"
         android:text="Başla"
         android:textColor="#FFFFFF" />
 
+    <Button
+        android:id="@+id/stop"
+        android:layout_width="wrap_content"
+        android:layout_height="61dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="211dp"
+        android:layout_marginEnd="-2dp"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/custom_button"
+        android:onClick="stop"
+        android:text="Dur"
+        android:textColor="#FFFFFF" />
+
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="669dp"
+        android:layout_height="580dp"
         android:layout_above="@+id/button"
         android:layout_alignParentTop="true"
         android:layout_marginTop="0dp"
-        android:layout_marginBottom="1dp">
+        android:layout_marginBottom="90dp">
 
     </FrameLayout>
 

@@ -21,7 +21,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CameraM"></activity>
+        <activity android:name=".CameraM" />
         <activity android:name=".BluetoothChat" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -40,7 +40,6 @@
         <activity android:name=".Scan" />
         <activity android:name=".Listen" />
         <activity android:name=".UploadFileToServer" />
-        <activity android:name=".CameraFrame" />
         <activity android:name=".CameraOpen" />
         <activity android:name=".ListActivity" />
         <activity android:name=".MainMenu" />

@@ -91,8 +91,11 @@ public class MainMenu extends AppCompatActivity {
     }
 
     public void  openCam(){
-       // Intent intent = new Intent(MainMenu.this,CameraFrame.class);
-        Intent intent = new Intent(MainMenu.this,CameraM.class);
+      // Intent intent = new Intent(MainMenu.this,SlateWeb.class);
+       Intent intent = new Intent(MainMenu.this,CameraM.class);
+        //Intent intent = new Intent(MainMenu.this,CameraR.class);
+
+
         startActivity(intent);
     }
 
