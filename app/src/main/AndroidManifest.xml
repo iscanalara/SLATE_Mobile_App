@@ -5,13 +5,14 @@
     <uses-feature
         android:name="android.hardware.camera2"
         android:required="true" />
-
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:name=".ListArrayApplication"
@@ -35,12 +36,10 @@
             android:name=".BluetoothService"
             android:enabled="true" />
 
-        <activity android:name=".Chat" />
         <activity android:name=".Select" />
         <activity android:name=".Scan" />
         <activity android:name=".Listen" />
         <activity android:name=".UploadFileToServer" />
-        <activity android:name=".CameraOpen" />
         <activity android:name=".ListActivity" />
         <activity android:name=".MainMenu" />
     </application>

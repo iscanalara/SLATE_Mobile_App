@@ -22,8 +22,10 @@ public class Listen extends AppCompatActivity {
 
     private final int REQ_CODE = 100;
 
+    //Text view
     TextView textView;
 
+    //Image view
     ImageView speak;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,7 @@ public class Listen extends AppCompatActivity {
         speak.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //call speak function for convert speech to text
                 speak();
             }
         });

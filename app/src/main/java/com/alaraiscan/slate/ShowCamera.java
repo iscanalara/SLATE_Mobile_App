@@ -13,12 +13,23 @@ package com.alaraiscan.slate;
         import java.io.IOException;
         import java.util.List;
 
+/**
+ * The type Show camera
+ * camera preview
+ */
 public class ShowCamera  extends SurfaceView implements SurfaceHolder.Callback {
+    //camera hardware
     Camera camera;
+    //surface holder
     SurfaceHolder holder;
 
 
-
+    /**
+     * Instantiates a new Show camera.
+     *
+     * @param context the context
+     * @param camera  the camera
+     */
     public ShowCamera(Context context, Camera camera) {
         super(context);
         this.camera = camera;
@@ -28,6 +39,7 @@ public class ShowCamera  extends SurfaceView implements SurfaceHolder.Callback {
     }
 
 
+    //creating surface
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         Camera.Parameters params = camera.getParameters();
@@ -39,7 +51,7 @@ public class ShowCamera  extends SurfaceView implements SurfaceHolder.Callback {
             mSize = size;
         }
 
-        //change the orientation
+        //change the orientation and size
         if (this.getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE){
             params.set("orientation","portrait");
             camera.setDisplayOrientation(90);

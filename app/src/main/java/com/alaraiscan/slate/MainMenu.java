@@ -19,20 +19,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import com.androidhiddencamera.HiddenCameraFragment;
-
 import java.io.File;
-
 import static com.alaraiscan.slate.R.color.white;
 
 public class MainMenu extends AppCompatActivity {
+    //Image views of buttons
     ImageView photograph,quickWord,keyboard,listen;
+    //Image view of backgrounds
     ImageView bgapp;
 
 
 // creating all activity here.
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,32 +75,29 @@ public class MainMenu extends AppCompatActivity {
 
        bgapp.animate().translationY(-1900).setDuration(800).setStartDelay(300);
 
-
-
     }
 
 
 
-
+    //open list activity
     public void  openListActivity(){
         Intent intent = new Intent(MainMenu.this,ListActivity.class);
         startActivity(intent);
     }
 
+    //open camera activity
     public void  openCam(){
-      // Intent intent = new Intent(MainMenu.this,SlateWeb.class);
        Intent intent = new Intent(MainMenu.this,CameraM.class);
-        //Intent intent = new Intent(MainMenu.this,CameraR.class);
-
-
         startActivity(intent);
     }
 
+    //open listen activity
     public void  openListen(){
         Intent intent = new Intent(MainMenu.this,Listen.class);
         startActivity(intent);
     }
 
+    //open chat activity
     public void  openBluetoothChat(){
         Intent intent = new Intent(MainMenu.this,BluetoothChat.class);
         startActivity(intent);

@@ -20,32 +20,42 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 
+/**
+ * The type Upload file to server.
+ */
 public class UploadFileToServer extends AsyncTask<File, Void, String> {
 
         private static final String TAG = UploadFileToServer.class.getSimpleName();
         private String server ;
         private String filePath;
-        public String response;
-        public boolean delete;
-        public boolean run = true;
+    //response of server
+    public String response;
 
-        private ResponseListener responseListener;
-        BluetoothService mServer;
-        String x1,y1,x2,y2,label;
+    //deleting uploaded files
+    public boolean delete;
 
+    public boolean run = true;
 
+    private ResponseListener responseListener;
 
+    BluetoothService mServer;
 
-
-
-   /*public UploadFileToServer(final String server, String filePath) {
-        this.server = server;
-        this.filePath = filePath;
-    }*/
+    //response label
+    String label;
 
 
 
-   public UploadFileToServer(final String server, String filePath, ResponseListener responseListener) {
+
+
+
+    /**
+     * Instantiates a new Upload file to server.
+     *
+     * @param server           the server
+     * @param filePath         the file path
+     * @param responseListener the response listener
+     */
+    public UploadFileToServer(final String server, String filePath, ResponseListener responseListener) {
             this.server = server;
             this.filePath = filePath;
             this.responseListener = responseListener;
@@ -85,6 +95,7 @@ public class UploadFileToServer extends AsyncTask<File, Void, String> {
                     e.printStackTrace();
                 }
 
+                //Json object parsing
                 JSONObject topLevel = new JSONObject(out.toString());
                 JSONObject main = topLevel.getJSONObject("interpretation");
                 label = String.valueOf(main.getString("label"));
@@ -108,6 +119,7 @@ public class UploadFileToServer extends AsyncTask<File, Void, String> {
             return response ;
         }
 
+    //when uploading is cancelled
     @Override
     protected void onCancelled() {
         super.onCancelled();

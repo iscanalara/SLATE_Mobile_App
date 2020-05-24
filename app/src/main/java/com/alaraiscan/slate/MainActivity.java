@@ -10,10 +10,10 @@ import android.widget.ImageView;
 
 
 public class MainActivity extends AppCompatActivity {
+    //Start bluetooth service button
     ImageView starterButton;
 
-    // starting bluetooth service with button.
-
+    // starting bluetooth service with button
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,8 +28,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    //After start the Bluetooth service it calls scan class for find a bluetooth adapter.
-
+    //After start the Bluetooth service it calls scan class for find a bluetooth adapter
     public void  bluetoothConnection(){
         Intent intent = new Intent(MainActivity.this,Scan.class);
         startActivity(intent);

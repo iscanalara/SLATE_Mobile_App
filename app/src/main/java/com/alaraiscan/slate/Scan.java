@@ -19,16 +19,29 @@ import java.util.List;
 import me.aflak.bluetooth.Bluetooth;
 
 /**
- * The type Scan.
+ * The type Scan bluetooth device.
  */
 public class Scan extends Activity implements Bluetooth.DiscoveryCallback, AdapterView.OnItemClickListener {
 
+    //bluetooth object
     private Bluetooth bt;
+
+    //list view
     private ListView listView;
+
+    //adapter array
     private ArrayAdapter<String> adapter;
+
+    //text view of state
     private TextView state;
+
+    //progress bar
     private ProgressBar progress;
+
+    //scan bar
     private Button scan;
+
+    //list of bluetooth devices
     private List<BluetoothDevice> devices;
 
     @Override
@@ -69,12 +82,13 @@ public class Scan extends Activity implements Bluetooth.DiscoveryCallback, Adapt
                 devices = new ArrayList<>();
                 progress.setVisibility(View.VISIBLE);
                 state.setText("Aranıyor...");
+                //scan bluetooth devices
                 bt.scanDevices();
             }
         });
     }
 
-
+    // set text
     private void setText(final String txt){
         runOnUiThread(new Runnable() {
             @Override
@@ -84,6 +98,7 @@ public class Scan extends Activity implements Bluetooth.DiscoveryCallback, Adapt
         });
     }
 
+    //set progress visibility
     private void setProgressVisibility(final int id){
         runOnUiThread(new Runnable() {
             @Override
@@ -98,9 +113,11 @@ public class Scan extends Activity implements Bluetooth.DiscoveryCallback, Adapt
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         setProgressVisibility(View.VISIBLE);
         setText("Eşleşiyor...");
+        //pair bt devices
         bt.pair(devices.get(position));
     }
 
+    //when activity finish
     @Override
     public void onFinish() {
         setProgressVisibility(View.INVISIBLE);
@@ -115,6 +132,7 @@ public class Scan extends Activity implements Bluetooth.DiscoveryCallback, Adapt
 
     }
 
+    //add device
     @Override
     public void onDevice(BluetoothDevice device) {
         final BluetoothDevice tmp = device;
@@ -129,6 +147,7 @@ public class Scan extends Activity implements Bluetooth.DiscoveryCallback, Adapt
 
     }
 
+    //pair devices
     @Override
     public void onPair(BluetoothDevice device) {
         setProgressVisibility(View.INVISIBLE);
@@ -139,13 +158,15 @@ public class Scan extends Activity implements Bluetooth.DiscoveryCallback, Adapt
 
     }
 
+    //eşleşmeyi sonlandır
     @Override
     public void onUnpair(BluetoothDevice device) {
         setProgressVisibility(View.INVISIBLE);
-        setText("Eşleşti!");
+        setText("Eşleşme sona erdi!");
 
     }
 
+    //eşleşme sırasında hata mesajı
     @Override
     public void onError(String message) {
         setProgressVisibility(View.INVISIBLE);

@@ -23,14 +23,18 @@ import me.aflak.bluetooth.Bluetooth;
 import me.aflak.pulltorefresh.PullToRefresh;
 
 /**
- * The type Select.
+ * The type Selecting bluetooth device.
  */
 public class Select extends Activity implements PullToRefresh.OnRefreshListener {
-
+    //bluetooth object
     private Bluetooth bt;
+    //listview
     private ListView listView;
+    //not found button
     private Button notFound;
+    //paired devices list
     private List<BluetoothDevice> paired;
+    //refreshing devices
     private PullToRefresh refresh;
     private boolean registered=false;
 
@@ -80,6 +84,7 @@ public class Select extends Activity implements PullToRefresh.OnRefreshListener 
         addBtDevicesToList();
     }
 
+    //add paired devices to list
     private void addBtDevicesToList() {
         paired = bt.getPairedDevices();
 
@@ -97,6 +102,7 @@ public class Select extends Activity implements PullToRefresh.OnRefreshListener 
         notFound.setEnabled(true);
     }
 
+    //refreshing list
     @Override
     public void onRefresh() {
         List<String> names = new ArrayList<String>();
@@ -120,7 +126,7 @@ public class Select extends Activity implements PullToRefresh.OnRefreshListener 
     }
 
 
-
+    //to listen to the broadcast signals of bluetooth
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -154,6 +160,7 @@ public class Select extends Activity implements PullToRefresh.OnRefreshListener 
     };
 
 
+    // when connection destroy
     public void onDestroy() {
         super.onDestroy();
         if(registered) {

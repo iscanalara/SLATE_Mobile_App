@@ -43,25 +43,28 @@ import java.util.TimerTask;
  */
 public class CameraM extends AppCompatActivity implements ResponseListener{
 
-
+    // Numbers of taking photos
     int i ;
 
-    TextView testView;
-
+    //Camera hardware
     Camera camera;
 
+    //Frame layout for camera view
     FrameLayout frameLayout;
 
+    //Camera surface holder class
     ShowCamera showCamera;
 
+    //Path of photo which is taking from camera
     String filePath = "";
 
+    //Timer for taking photo continuously
     Timer timer = new Timer();
-    Context context;
 
+    //File upload to server
     UploadFileToServer ufts;
 
-    private boolean safeToTakePicture = false;
+    Context context;
 
 
 
@@ -78,17 +81,10 @@ public class CameraM extends AppCompatActivity implements ResponseListener{
         showCamera = new ShowCamera(this,camera);
         frameLayout.addView(showCamera);
 
-
-       /* CanvasView drawable = new CanvasView(getApplicationContext());
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        frameLayout.addView(drawable, params);*/
-
-
     }
 
-    /**
-     * The picture callback.
-     */
+    //The picture callback.
+
     Camera.PictureCallback mPictureCallback = new Camera.PictureCallback() {
         @Override
         public void onPictureTaken(byte[] bytes, Camera camera) {
@@ -102,7 +98,7 @@ public class CameraM extends AppCompatActivity implements ResponseListener{
                     FileOutputStream fos = new FileOutputStream(pictureF);
                     fos.write(bytes);
                     fos.close();
-
+                    //Start camera preview
                    camera.startPreview();
                 }
                 catch (IOException e) {
@@ -113,9 +109,7 @@ public class CameraM extends AppCompatActivity implements ResponseListener{
     };
 
 
-    /**
-     * It is getting output file.
-     */
+    //It is getting output file.
     private File getOutputPicture() {
 
         String state = Environment.getExternalStorageState();
@@ -127,8 +121,10 @@ public class CameraM extends AppCompatActivity implements ResponseListener{
             File folder = new File(Environment.getExternalStorageDirectory()+File.separator+"SLATE");
 
             if(!folder.exists()){
+                //returns true if directory is created else returns false
                 folder.mkdirs();
             }
+            //change file name with i
             File out = new File(folder,i+".jpg");
             filePath = out.getAbsolutePath();
             i++;
@@ -160,8 +156,11 @@ public class CameraM extends AppCompatActivity implements ResponseListener{
 
     }
 
+    //Stop button for stopping timer and post method
     public void stop(View v){
+        //It stops the post method
         ufts.cancel(true);
+        //It stops the timer
         timer.cancel();
     }
 
@@ -170,38 +169,27 @@ public class CameraM extends AppCompatActivity implements ResponseListener{
     public void onDestroy() {
         super.onDestroy();
         timer.purge();
-        //It stops the timer
-        //.cancel(true);
-
-
     }
 
    @Override
     public void onResponseChanged(final JSONObject response) throws JSONException {
-        /*runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if(TextUtils.isEmpty(text)){
-                    testView.setText("");
-                }
-                else{
-                    testView.setText(text);
-                }
-
-            }
-        });*/
 
         runOnUiThread(new Runnable() {
            @Override
            public void run() {
                try {
+                   //Parsing the Json data
                    int x1 = response.getInt("x1");
                    int y1 =response.getInt("y1");
                    int x2 = response.getInt("x2");
                    int y2 = response.getInt("y2");
                    String label = String.valueOf(response.getString("label"));
+
+                   //Sending label to COBO's external display via bluetooth
                    //BluetoothService bs = new BluetoothService();
                   // bs.sendData(label);
+
+                   //Drawing rectangle over hand using response
                   CanvasView drawable = new CanvasView(getApplicationContext(), x1,y1,x2,y2);
                    FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                    frameLayout.addView(drawable, params);
@@ -216,7 +204,7 @@ public class CameraM extends AppCompatActivity implements ResponseListener{
 
     }
 
-
+    //Creating canvas for draw rectangle over hand
     public static class CanvasView extends View {
 
         private Paint paint;
@@ -231,8 +219,8 @@ public class CameraM extends AppCompatActivity implements ResponseListener{
             this.top = top;
             this.right = right;
             this.bottom = bottom;
-            //Customize your own properties
 
+            //Style of rectangle
             paint = new Paint(Paint.ANTI_ALIAS_FLAG);
             paint.setColor(Color.GREEN);
             paint.setStyle(Paint.Style.STROKE);
@@ -248,9 +236,12 @@ public class CameraM extends AppCompatActivity implements ResponseListener{
             super.onDraw(canvas);
             clearCanvas(canvas);
             paint.setColor(Color.GREEN);
+            //drawing rectangle
             canvas.drawRect(left,top,left+right,top+bottom,paint);
         }
 
+
+        //Clearing canvas after every response change
         public void clearCanvas(Canvas canvas){
             canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
             invalidate();

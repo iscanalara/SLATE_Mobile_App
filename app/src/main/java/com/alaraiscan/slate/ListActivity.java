@@ -18,18 +18,21 @@ import java.util.ArrayList;
  */
 public class ListActivity extends AppCompatActivity implements View.OnClickListener{
 
-
+    //quick words and sentences list
     ArrayList<String> arrayList;
 
     ArrayAdapter<String> arrayAdapter;
 
+    //selected word or sentences
     String selected;
 
-
+    //List view
     ListView listView;
 
+    // text field
     EditText text;
 
+    //add button
     Button addToList;
 
     @Override
@@ -44,6 +47,9 @@ public class ListActivity extends AppCompatActivity implements View.OnClickListe
                 selected = String.valueOf(parent.getItemAtPosition(position));
                 Toast.makeText( ListActivity.this,selected,Toast.LENGTH_LONG).show();
 
+                //Sending selected text to COBO's external display via bluetooth
+               //BluetoothService bs = new BluetoothService();
+                //bs.sendData(selected);
             }
         });
 

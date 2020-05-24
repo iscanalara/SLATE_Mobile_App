@@ -29,7 +29,6 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation project(path: ':hiddencamera')
     implementation 'org.apache.httpcomponents:httpcore:4.2.4'
     implementation 'org.apache.httpcomponents:httpmime:4.2'
     implementation 'me.aflak.libraries:bluetooth:1.2.4'

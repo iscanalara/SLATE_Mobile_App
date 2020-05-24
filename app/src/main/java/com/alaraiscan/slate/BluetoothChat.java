@@ -24,12 +24,24 @@ import java.util.UUID;
 
 import static com.alaraiscan.slate.R.layout.activity_bluetooth_chat;
 
+/**
+ * The type Bluetooth chat.
+ */
 public class BluetoothChat extends AppCompatActivity implements View.OnClickListener {
+
+    //Send message button
     Button send;
 
 
+    //Message field
     EditText message;
+
+
+    //Checking connection
     boolean mBounded;
+
+
+    //Bluetooth server
     BluetoothService mServer;
 
     private static final UUID my_UUID=UUID.fromString("8ce255c0-223a-11e0-ac64-803450c9a66");
@@ -42,6 +54,8 @@ public class BluetoothChat extends AppCompatActivity implements View.OnClickList
         message = (EditText)findViewById(R.id.message);
         send.setOnClickListener(this);
     }
+
+    //Sending message when click send button
     @Override
     public void onClick(View v) {
         String res = message.getText().toString();
@@ -49,6 +63,9 @@ public class BluetoothChat extends AppCompatActivity implements View.OnClickList
         mServer.sendData(res);
     }
 
+
+
+    //Connecting bluetooth using Bluetooth Service
     @Override
     protected void onStart() {
         super.onStart();
@@ -56,6 +73,7 @@ public class BluetoothChat extends AppCompatActivity implements View.OnClickList
         bindService(mIntent, mConnection, BIND_AUTO_CREATE);
     };
 
+   //connection to service
     ServiceConnection mConnection = new ServiceConnection() {
 
 
@@ -74,6 +92,7 @@ public class BluetoothChat extends AppCompatActivity implements View.OnClickList
         }
     };
 
+    //stopping service
     @Override
     protected void onStop() {
         super.onStop();
